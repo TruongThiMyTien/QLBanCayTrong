@@ -1,0 +1,71 @@
+﻿@model IEnumerable<BanCayTrong.Models.MatHang>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ten)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Giagoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Giaban)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Soluong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hinhanh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MadmNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giagoc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giaban)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Soluong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mota)
+            </td>
+            <td>
+                <img src="~/images/mathang/@item.Hinhanh" width="50" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MadmNavigation.Ten)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Mamh">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Mamh">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Mamh">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

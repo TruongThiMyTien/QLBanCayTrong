@@ -1,0 +1,120 @@
+﻿@model List<BanCayTrong.Models.CartItem>
+@{
+    ViewData["Title"] = "Xác nhận thanh toán";
+}
+
+
+<h1> Thông tin đơn hàng</h1>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Thông tin khách</h3>
+        @if (ViewBag.khachhang != null)
+        {
+            <form asp-action="CreateBill">
+                <div class="my-3">
+                    <label>Họ tên</label>
+                    <input type="text" disabled value="@ViewBag.khachhang.Ten" name="hoten" class="form-control" />
+                </div>
+                <div class="my-3">
+                    <label>Email</label>
+                    <input type="email" disabled value="@ViewBag.khachhang.Email" name="email" class="form-control" />
+                </div>
+                <div class="my-3">
+                    <label>Điện thoại</label>
+                    <input type="text" disabled value="@ViewBag.khachhang.Dienthoai" name="dienthoai" class="form-control" />
+                </div>
+                <div class="my-3">
+                    <label>Địa chỉ</label> <br />
+                    @{
+                        foreach (DiaChi dc in ViewBag.diachi)
+                        {
+                            string tmp = dc.Diachi1 + ", " + dc.Phuongxa + ", " + dc.Quanhuyen + ", " + dc.Tinhthanh;
+                            if (dc.Macdinh == 1)
+                            {
+                                <input type="radio" id="@dc.Madc" name="madiachi" value="@dc.Madc" checked="true">
+                                <label for="@dc.Madc">@tmp (Mặc định)</label><br>
+                            }
+                            else
+                            {
+                                <input type="radio" id="@dc.Madc" name="madiachi" value="@dc.Madc">
+                                <label for="@dc.Madc">@tmp</label><br>
+                            }
+
+                        }
+                    }
+                </div>
+                <div class="my-3">
+                    <input type="submit" value="Xác nhận đặt hàng" class="btn btn-success" />
+                </div>
+            </form>
+        }
+        else
+        {
+            <form asp-action="CreateBill">
+                <div class="my-3">
+                    <label>Họ tên</label>
+                    <input type="text" name="hoten" class="form-control" />
+                </div>
+                <div class="my-3">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" />
+                </div>
+                <div class="my-3">
+                    <label>Điện thoại</label>
+                    <input type="text" name="dienthoai" class="form-control" />
+                </div>
+                <div class="my-3">
+                    <label>Địa chỉ</label> <br />
+                    Địa chỉ cụ thể: <input type="text" name="diachicuthe" class="form-control" />
+                    Phường xã: <input type="text" name="phuongxa" class="form-control" />
+                    Quận huyện: <input type="text" name="quanhuyen" class="form-control" />
+                    Tỉnh thành: <input type="text" name="tinhthanh" class="form-control" />
+                </div>
+                <div class="my-3">
+                    <input type="submit" value="Xác nhận đặt hàng" class="btn btn-success" />
+                </div>
+            </form>
+        }
+
+    </div>
+    <div class="col-md-6">
+        <h3>Thông tin giỏ hàng</h3>
+        @if (Model.Count > 0)
+        {
+            int stt = 1;
+            int thanhtien = 0;
+            int tongtien = 0;
+
+            <table class="table">
+                <tr>
+                    <th>STT</th>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+
+                @foreach (var i in Model)
+                {
+                    thanhtien = i.mathang.Giaban * i.soluong;
+                    tongtien += thanhtien;
+                    <tr class="align-middle">
+                        <td>@(stt++)</td>
+                        <td>
+                            <img class="img-thumbnail" width="50" src="~/images/mathang/@(i.mathang.Hinhanh)" />
+                            @(i.mathang.Ten)
+                        </td>
+                        <td>@(i.mathang.Giaban.ToString("n0"))đ</td>
+
+                        <td>@(i.soluong)</td>
+                        <td>@(thanhtien.ToString("n0"))đ</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="4" class="text-end fw-bold">Tổng tiền</td>
+                    <td colspan="2" class="fw-bold">@(tongtien.ToString("n0"))đ</td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
