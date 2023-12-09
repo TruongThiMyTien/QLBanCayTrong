@@ -35,6 +35,8 @@ namespace BanCayTrong.Models
         [Column("hinhanh")]
         [StringLength(255)]
         public string Hinhanh { get; set; }
+        [Column("daxoa")]
+        public int? Daxoa { get; set; }
         [Column("madm")]
         public int Madm { get; set; }
 

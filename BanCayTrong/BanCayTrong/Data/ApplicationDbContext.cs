@@ -42,7 +42,7 @@ namespace BanCayTrong.Data
             modelBuilder.Entity<CthoaDon>(entity =>
             {
                 entity.HasKey(e => e.Macthd)
-                    .HasName("PK__CTHoaDon__50C3A3F87C0C9776");
+                    .HasName("PK__CTHoaDon__50C3A3F8F9E89068");
 
                 entity.Property(e => e.Dongia).HasDefaultValueSql("((0))");
 
@@ -66,13 +66,13 @@ namespace BanCayTrong.Data
             modelBuilder.Entity<DanhMuc>(entity =>
             {
                 entity.HasKey(e => e.Madm)
-                    .HasName("PK__DanhMuc__7A21E0203D3BFB8B");
+                    .HasName("PK__DanhMuc__7A21E0201A49B712");
             });
 
             modelBuilder.Entity<DiaChi>(entity =>
             {
                 entity.HasKey(e => e.Madc)
-                    .HasName("PK__DiaChi__7A21E05AD6205090");
+                    .HasName("PK__DiaChi__7A21E05A430072BC");
 
                 entity.HasOne(d => d.MakhNavigation)
                     .WithMany(p => p.DiaChi)
@@ -84,7 +84,7 @@ namespace BanCayTrong.Data
             modelBuilder.Entity<HoaDon>(entity =>
             {
                 entity.HasKey(e => e.Mahd)
-                    .HasName("PK__HoaDon__7A2100DE6AD41CD7");
+                    .HasName("PK__HoaDon__7A2100DE6503D3B3");
 
                 entity.Property(e => e.Tongtien).HasDefaultValueSql("((0))");
 
@@ -104,7 +104,7 @@ namespace BanCayTrong.Data
             modelBuilder.Entity<KhachHang>(entity =>
             {
                 entity.HasKey(e => e.Makh)
-                    .HasName("PK__KhachHan__7A21BB4C8E5F63E9");
+                    .HasName("PK__KhachHan__7A21BB4C5ECE21C3");
 
                 entity.Property(e => e.Dienthoai).IsUnicode(false);
 
@@ -116,7 +116,7 @@ namespace BanCayTrong.Data
             modelBuilder.Entity<MatHang>(entity =>
             {
                 entity.HasKey(e => e.Mamh)
-                    .HasName("PK__MatHang__7A21CB8EA186BF2B");
+                    .HasName("PK__MatHang__7A21CB8EB57FA38A");
 
                 entity.Property(e => e.Hinhanh).IsUnicode(false);
 
@@ -130,7 +130,7 @@ namespace BanCayTrong.Data
             modelBuilder.Entity<NhanVien>(entity =>
             {
                 entity.HasKey(e => e.Manv)
-                    .HasName("PK__NhanVien__7A21B37D3C91372E");
+                    .HasName("PK__NhanVien__7A21B37D676B2C66");
 
                 entity.Property(e => e.Dienthoai).IsUnicode(false);
 

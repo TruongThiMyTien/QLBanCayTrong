@@ -20,11 +20,17 @@ namespace BanCayTrong.Controllers
         {
             _context = context;
         }
+        public void GetInfo()
+        {
+            ViewBag.nhanvien = _context.NhanVien.FirstOrDefault(n => n.Manv.ToString() == HttpContext.Session.GetString("nhanvien"));
+        }
+
 
         // GET: MatHangs
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.MatHang.Include(m => m.MadmNavigation);
+            GetInfo();
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -43,7 +49,7 @@ namespace BanCayTrong.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(matHang);
         }
 
@@ -51,6 +57,7 @@ namespace BanCayTrong.Controllers
         public IActionResult Create()
         {
             ViewData["Madm"] = new SelectList(_context.DanhMuc, "Madm", "Ten");
+            GetInfo();
             return View();
         }
 
@@ -69,6 +76,7 @@ namespace BanCayTrong.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Madm"] = new SelectList(_context.DanhMuc, "Madm", "Ten", matHang.Madm);
+            GetInfo();
             return View(matHang);
         }
 
@@ -86,6 +94,7 @@ namespace BanCayTrong.Controllers
                 return NotFound();
             }
             ViewData["Madm"] = new SelectList(_context.DanhMuc, "Madm", "Ten", matHang.Madm);
+            GetInfo();
             return View(matHang);
         }
 
@@ -108,7 +117,8 @@ namespace BanCayTrong.Controllers
                     if(file != null)
                     {
                         matHang.Hinhanh = UploadHinhAnh(file);
-                    }    
+                    }
+                    matHang.Daxoa = 0;
                     _context.Update(matHang);
                     await _context.SaveChangesAsync();
                 }
@@ -126,6 +136,7 @@ namespace BanCayTrong.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Madm"] = new SelectList(_context.DanhMuc, "Madm", "Ten", matHang.Madm);
+            GetInfo();
             return View(matHang);
         }
 
@@ -144,7 +155,7 @@ namespace BanCayTrong.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(matHang);
         }
 
@@ -154,7 +165,8 @@ namespace BanCayTrong.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var matHang = await _context.MatHang.FindAsync(id);
-            _context.MatHang.Remove(matHang);
+            matHang.Daxoa = 1;
+            _context.MatHang.Update(matHang);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

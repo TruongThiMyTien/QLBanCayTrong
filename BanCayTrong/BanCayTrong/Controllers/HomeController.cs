@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using BanCayTrong.Models;
 
 namespace QLBanCayTrong.Controllers
 {
@@ -19,7 +18,7 @@ namespace QLBanCayTrong.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<KhachHang> _passwordHasher;
-        
+
         public HomeController(ApplicationDbContext context, IPasswordHasher<KhachHang> passwordHasher)
         {
             _context = context;
@@ -39,7 +38,7 @@ namespace QLBanCayTrong.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.MatHang.Include(m => m.MadmNavigation);
+            var applicationDbContext = (_context.MatHang.Include(m => m.MadmNavigation)).Where(m => m.Daxoa == 0);
             GetInfo();
             return View(await applicationDbContext.ToListAsync());
         }
@@ -143,13 +142,14 @@ namespace QLBanCayTrong.Controllers
 
         public IActionResult CheckOut()
         {
-            if(HttpContext.Session.GetString("khachhang") == "" || HttpContext.Session.GetString("khachhang") == null)
+            if (HttpContext.Session.GetString("khachhang") == "" || HttpContext.Session.GetString("khachhang") == null)
             {
                 GetInfo();
                 return View(GetCartItems());
-                
+
             }
-            else {
+            else
+            {
                 int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
                 List<DiaChi> lstDiaChi = _context.DiaChi.Where(d => d.Makh == makh && d.Daxoa == 0).ToList();
                 ViewBag.diachi = lstDiaChi;
@@ -189,7 +189,7 @@ namespace QLBanCayTrong.Controllers
                 int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
                 kh = _context.KhachHang.FirstOrDefault(k => k.Makh == makh);
                 dc = _context.DiaChi.FirstOrDefault(d => d.Madc == madiachi);
-            }    
+            }
 
             // lưu hóa đơn 
             HoaDon hd = new HoaDon();
@@ -241,7 +241,7 @@ namespace QLBanCayTrong.Controllers
         [HttpPost]
         public IActionResult Login(string email, string matkhau)
         {
-            KhachHang kh = _context.KhachHang.FirstOrDefault(k => k.Email == email && k.Matkhau != null);
+            KhachHang kh = _context.KhachHang.FirstOrDefault(k => k.Email == email && k.Matkhau != null && k.Daxoa == 0);
 
             if (kh != null && matkhau != null && _passwordHasher.VerifyHashedPassword(kh, kh.Matkhau, matkhau) == PasswordVerificationResult.Success)
             {
@@ -278,6 +278,7 @@ namespace QLBanCayTrong.Controllers
                 kh.Dienthoai = dienthoai;
                 kh.Email = email;
                 kh.Matkhau = _passwordHasher.HashPassword(kh, matkhau);
+                kh.Daxoa = 0;
                 _context.Add(kh);
                 await _context.SaveChangesAsync();
 
@@ -289,6 +290,7 @@ namespace QLBanCayTrong.Controllers
                 dc.Tinhthanh = tinhthanh;
                 dc.Makh = kh.Makh;
                 dc.Macdinh = 1;
+                dc.Daxoa = 0;
                 _context.Add(dc);
                 await _context.SaveChangesAsync();
 
@@ -398,14 +400,14 @@ namespace QLBanCayTrong.Controllers
         public async Task<IActionResult> Search(string SearchKey)
         {
             var lstHang = await _context.MatHang.Include(m => m.MadmNavigation)
-                            .Where(k => k.Ten.Contains(SearchKey)).ToListAsync();
+                            .Where(k => k.Ten.Contains(SearchKey) && k.Daxoa == 0).ToListAsync();
             GetInfo();
             return View("SearchResult", lstHang);
         }
 
         public async Task<IActionResult> Index1(int id)
         {
-            var lstHang = await _context.MatHang.Include(m => m.MadmNavigation).Where(h => h.Madm == id).ToListAsync();
+            var lstHang = await _context.MatHang.Include(m => m.MadmNavigation).Where(h => h.Madm == id && h.Daxoa == 0).ToListAsync();
             GetInfo();
             return View(lstHang);
         }
