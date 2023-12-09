@@ -39,6 +39,8 @@ namespace BanCayTrong.Models
         public int Makh { get; set; }
         [Column("macdinh")]
         public int? Macdinh { get; set; }
+        [Column("daxoa")]
+        public int? Daxoa { get; set; }
 
         [ForeignKey(nameof(Makh))]
         [InverseProperty(nameof(KhachHang.DiaChi))]

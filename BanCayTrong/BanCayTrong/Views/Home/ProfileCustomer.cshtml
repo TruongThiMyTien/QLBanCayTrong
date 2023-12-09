@@ -49,11 +49,12 @@
                                             @if (i.Macdinh == 1)
                                             {
                                                 <td class="text-center"><i class="bi bi-check-circle-fill"></i></td>
+                                                <td></td>
                                             }
                                             else
                                             {
-                                                <td class="text-center" action="SetAddressDefault"><a>Đặt làm mặc định</a></td>
-                                                <td>Xóa</td>
+                                                <td class="text-center" action="SetAddressDefault"><a class="btn btn-outline-success" asp-action="SetDefaultAddress" asp-route-id="@i.Madc">Đặt làm mặc định</a></td>
+                                                <td><a class="btn btn-outline-danger" asp-action="DeleteAddress" asp-route-id="@i.Madc">Xóa</a></td>
                                             }
 
                                         </tr>
