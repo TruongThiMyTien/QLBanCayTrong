@@ -34,6 +34,8 @@ namespace BanCayTrong.Models
         [Column("matkhau")]
         [StringLength(255)]
         public string Matkhau { get; set; }
+        [Column("daxoa")]
+        public int? Daxoa { get; set; }
 
         [InverseProperty("MakhNavigation")]
         public virtual ICollection<DiaChi> DiaChi { get; set; }

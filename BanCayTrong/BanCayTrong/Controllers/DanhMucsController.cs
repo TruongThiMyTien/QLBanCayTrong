@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BanCayTrong.Data;
 using BanCayTrong.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace BanCayTrong.Controllers
 {
@@ -19,9 +20,15 @@ namespace BanCayTrong.Controllers
             _context = context;
         }
 
+        public void GetInfo()
+        {
+            ViewBag.nhanvien = _context.NhanVien.FirstOrDefault(n => n.Manv.ToString() == HttpContext.Session.GetString("nhanvien"));
+        }
+
         // GET: DanhMucs
         public async Task<IActionResult> Index()
         {
+            GetInfo();
             return View(await _context.DanhMuc.ToListAsync());
         }
 
@@ -39,13 +46,14 @@ namespace BanCayTrong.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(danhMuc);
         }
 
         // GET: DanhMucs/Create
         public IActionResult Create()
         {
+            GetInfo();
             return View();
         }
 
@@ -62,6 +70,7 @@ namespace BanCayTrong.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            GetInfo();
             return View(danhMuc);
         }
 
@@ -78,6 +87,7 @@ namespace BanCayTrong.Controllers
             {
                 return NotFound();
             }
+            GetInfo();
             return View(danhMuc);
         }
 
@@ -113,6 +123,7 @@ namespace BanCayTrong.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            GetInfo();
             return View(danhMuc);
         }
 
@@ -130,7 +141,7 @@ namespace BanCayTrong.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(danhMuc);
         }
 

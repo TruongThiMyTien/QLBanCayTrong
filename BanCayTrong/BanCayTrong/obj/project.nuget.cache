@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FPPJ8qBEUWL5+fn1/HfQ/KHJTdIdhY0ZSjSyKRoo8nk9XmOYtXhYL/uJJytDmUOGEr5qt494duDvC+ytDTTGjQ==",
+  "dgSpecHash": "m+EoS6CvwzMI/pIA19JKRuYzdNUkPXeU2CGjDiSGCJdJOqQoCgcX0UdKM7+GIt4VW+8FZ3No1hGmjll6zRnYNg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\t0195\\Desktop\\ASP NET\\DOAN\\BanCayTrong\\QLBanCayTrong\\BanCayTrong\\BanCayTrong\\BanCayTrong.csproj",
+  "projectFilePath": "C:\\Users\\t0195\\Desktop\\ASP NET\\BanCayTrong\\BanCayTrong\\BanCayTrong.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\t0195\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.32\\microsoft.aspnetcore.cryptography.internal.3.1.32.nupkg.sha512",
     "C:\\Users\\t0195\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.32\\microsoft.aspnetcore.cryptography.keyderivation.3.1.32.nupkg.sha512",

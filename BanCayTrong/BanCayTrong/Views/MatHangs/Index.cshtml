@@ -31,7 +31,10 @@
                 @Html.DisplayNameFor(model => model.Hinhanh)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MadmNavigation)
+                Danh mục
+            </th>
+            <th>
+               Đã xóa
             </th>
             <th></th>
         </tr>
@@ -60,6 +63,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MadmNavigation.Ten)
             </td>
+            @if (item.Daxoa == 0)
+            {
+                <td></td>
+            }
+            else
+            {
+                <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+            }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Mamh">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Mamh">Details</a> |
