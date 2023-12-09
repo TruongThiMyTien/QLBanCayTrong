@@ -184,3 +184,5 @@ C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCay
 C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\MatHangs\Details.cshtml.g.cs
 C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\MatHangs\Edit.cshtml.g.cs
 C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\MatHangs\Index.cshtml.g.cs
+C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\Home\SearchResult.cshtml.g.cs
+C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index1.cshtml.g.cs

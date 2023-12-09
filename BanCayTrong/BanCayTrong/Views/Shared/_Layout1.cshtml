@@ -23,17 +23,32 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Trang chính</a>
                     </li>
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown">Danh mục</a>
+                        <ul class="dropdown-menu">
+                            @foreach (DanhMuc i in (List<DanhMuc>)ViewBag.danhmuc)
+                            {
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Index1" asp-route-id="@i.Madm">@i.Ten</a></li>
+                            }
+                        </ul>
+                    </li>
                 </ul>
                 <div class="d-flex">
+                    <div class="d-flex flex-row">
+                        <form asp-controller="Home" asp-action="Search">
+                            <input type="search" name="SearchKey" placeholder="Tìm kiếm...." class="form-control"/>
+                        </form>
+                        
+                    </div>
                     @if (ViewBag.khachhang != null)
                     {
-        <a asp-controller="Home" asp-action="ProfileCustomer" class="btn btn-outline-light mx-1"><i class="bi bi-person"></i>@ViewBag.khachhang.Ten</a> }
-    else
-    {
-<a asp-controller="Home" asp-action="Login" class="btn btn-outline-light mx-1"><i class="bi bi-person"></i> Đăng nhập</a>}
+                        <a asp-controller="Home" asp-action="ProfileCustomer" class="btn btn-outline-light mx-1"><i class="bi bi-person"></i>@ViewBag.khachhang.Ten</a> 
+                    }
+                    else
+                    {
+                        <a asp-controller="Home" asp-action="Login" class="btn btn-outline-light mx-1"><i class="bi bi-person"></i> Đăng nhập</a>
+                    }
 
-                    <!--<span class="badge bg-danger text-white ms-1 rounded-pill"></span>-->
                     <a class="btn btn-outline-light" asp-controller="Home" asp-action="ViewCart"><i class="bi bi-cart3"></i> Giỏ hàng <span class="badge bg-danger text-white ms-1 rounded-pill">@ViewData["SoLuongGioHang"]</span></a>
                 </div>
             </div>
@@ -62,7 +77,10 @@
                 </div>
                 <div class="col-3">
                     <h4>DANH MỤC HÀNG</h4>
-                    <a class="list-group-item" asp-action="index1" asp-route-id="">Link</a>
+                    @foreach (DanhMuc i in (List<DanhMuc>)ViewBag.danhmuc)
+                    {
+                        <a class="list-group-item" asp-action="Index1" asp-route-id="@i.Madm">@i.Ten</a>
+                    }
                 </div>
                 <div class="col-3">
                     <h4>DỊCH VỤ KHÁCH HÀNG</h4>

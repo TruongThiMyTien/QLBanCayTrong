@@ -19,7 +19,7 @@ namespace QLBanCayTrong.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<KhachHang> _passwordHasher;
-
+        
         public HomeController(ApplicationDbContext context, IPasswordHasher<KhachHang> passwordHasher)
         {
             _context = context;
@@ -29,10 +29,11 @@ namespace QLBanCayTrong.Controllers
         public void GetInfo()
         {
             ViewData["SoLuongGioHang"] = GetCartItems().Count;
-            if (HttpContext.Session.GetString("khachhang") != "")
+            if (HttpContext.Session.GetString("khachhang") != "" || HttpContext.Session.GetString("khachhang") != null)
             {
                 ViewBag.khachhang = _context.KhachHang.FirstOrDefault(k => k.Makh.ToString() == HttpContext.Session.GetString("khachhang"));
             }
+            ViewBag.danhmuc = (List<DanhMuc>)_context.DanhMuc.ToList();
 
         }
 
@@ -150,7 +151,7 @@ namespace QLBanCayTrong.Controllers
             }
             else {
                 int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-                List<DiaChi> lstDiaChi = _context.DiaChi.Where(d => d.Makh == makh).ToList();
+                List<DiaChi> lstDiaChi = _context.DiaChi.Where(d => d.Makh == makh && d.Daxoa == 0).ToList();
                 ViewBag.diachi = lstDiaChi;
                 GetInfo();
                 return View(GetCartItems());
@@ -242,7 +243,7 @@ namespace QLBanCayTrong.Controllers
         {
             KhachHang kh = _context.KhachHang.FirstOrDefault(k => k.Email == email && k.Matkhau != null);
 
-            if (kh != null && _passwordHasher.VerifyHashedPassword(kh, kh.Matkhau, matkhau) == PasswordVerificationResult.Success)
+            if (kh != null && matkhau != null && _passwordHasher.VerifyHashedPassword(kh, kh.Matkhau, matkhau) == PasswordVerificationResult.Success)
             {
                 HttpContext.Session.SetString("khachhang", kh.Makh.ToString());
                 return RedirectToAction(nameof(ProfileCustomer));
@@ -299,7 +300,7 @@ namespace QLBanCayTrong.Controllers
         {
             GetInfo();
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            var lstDiaChi = _context.DiaChi.Where(d => d.Makh == makh);
+            var lstDiaChi = _context.DiaChi.Where(d => d.Makh == makh && d.Daxoa == 0);
             return View(lstDiaChi);
         }
 
@@ -320,6 +321,7 @@ namespace QLBanCayTrong.Controllers
             dc.Phuongxa = phuongxa;
             dc.Quanhuyen = quanhuyen;
             dc.Tinhthanh = tinhthanh;
+            dc.Daxoa = 0;
             dc.Macdinh = 0;
             _context.Add(dc);
             await _context.SaveChangesAsync();
@@ -367,6 +369,45 @@ namespace QLBanCayTrong.Controllers
             HttpContext.Session.SetString("khachhang", "");
             GetInfo();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> SetDefaultAddress(int id)
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            DiaChi dc1 = _context.DiaChi.FirstOrDefault(d => d.Makh == makh && d.Macdinh == 1);
+            dc1.Macdinh = 0;
+            _context.Update(dc1);
+
+            DiaChi dc2 = _context.DiaChi.FirstOrDefault(d => d.Madc == id);
+            dc2.Macdinh = 1;
+            _context.Update(dc2);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(ProfileCustomer));
+        }
+
+        public async Task<IActionResult> DeleteAddressAsync(int id)
+        {
+            DiaChi dc = _context.DiaChi.FirstOrDefault(d => d.Madc == id);
+            dc.Daxoa = 1;
+            _context.Update(dc);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ProfileCustomer));
+        }
+
+        public async Task<IActionResult> Search(string SearchKey)
+        {
+            var lstHang = await _context.MatHang.Include(m => m.MadmNavigation)
+                            .Where(k => k.Ten.Contains(SearchKey)).ToListAsync();
+            GetInfo();
+            return View("SearchResult", lstHang);
+        }
+
+        public async Task<IActionResult> Index1(int id)
+        {
+            var lstHang = await _context.MatHang.Include(m => m.MadmNavigation).Where(h => h.Madm == id).ToListAsync();
+            GetInfo();
+            return View(lstHang);
         }
     }
 }
