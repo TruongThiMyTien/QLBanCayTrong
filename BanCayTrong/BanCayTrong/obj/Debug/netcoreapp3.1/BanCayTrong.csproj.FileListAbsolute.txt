@@ -418,3 +418,9 @@ C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCay
 C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\submitThongKeKhachHang.cshtml.g.cs
 C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\submitThongKeMatHang.cshtml.g.cs
 C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\ThongKeMatHang.cshtml.g.cs
+C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\HoaDonChuaDuyet.cshtml.g.cs
+C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\ChiTietHoaDonChuaDuyet.cshtml.g.cs
+C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\ChiTietHoaDonDaDuyet.cshtml.g.cs
+C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\HoaDonDaDuyet.cshtml.g.cs
+C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\ChiTietHoaDonDaHuy.cshtml.g.cs
+C:\Users\t0195\Desktop\ASP NET\DOAN\BanCayTrong\QLBanCayTrong\BanCayTrong\BanCayTrong\obj\Debug\netcoreapp3.1\Razor\Views\HomeQuanLy\HoaDonDaHuy.cshtml.g.cs

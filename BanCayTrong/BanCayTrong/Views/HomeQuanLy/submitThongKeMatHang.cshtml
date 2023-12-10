@@ -49,7 +49,7 @@
             Hình ảnh
         </dt>
         <dd class="col-sm-10">
-            <img width="150" src="~/images/mathang/@ViewBag.ttmathang.Hinhanh" />            
+            <img width="150" src="~/images/mathang/@ViewBag.ttmathang.Hinhanh" />
         </dd>
     </dl>
 </div>
@@ -73,14 +73,15 @@
                 int stt = 1;
                 foreach (CthoaDon cthd in Model)
                 {
-                        <tr>
-                            <td>@stt</td>
-                            <td>@cthd.Mahd</td>
-                            <td>@cthd.MahdNavigation.Ngay</td>
-                            <td>@cthd.Dongia</td>
-                            <td>@cthd.Soluong</td>
-                            <td>@cthd.Thanhtien</td>
-                        </tr>
+                    <tr>
+                        <td>@stt</td>
+                        <td>@cthd.Mahd</td>
+                        <td>@cthd.MahdNavigation.Ngay</td>
+                        <td>@cthd.Dongia</td>
+                        <td>@cthd.Soluong</td>
+                        <td>@cthd.Thanhtien</td>
+                    </tr>
+                    stt++;
                 }
             }
         </tbody>

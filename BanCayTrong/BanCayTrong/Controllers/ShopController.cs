@@ -34,10 +34,7 @@ namespace BanCayTrong.Controllers
             if(nv != null)
             {
                 HttpContext.Session.SetString("nhanvien", nv.Manv.ToString());
-                if(nv.Quyen == 1)
-                    return RedirectToAction("Index", "HomeQuanLy");
-                else
-                    return RedirectToAction("Index", "HomeNhanVien");
+                return RedirectToAction("Index", "HomeQuanLy");
             }   
             return RedirectToAction(nameof(Index));
         }
