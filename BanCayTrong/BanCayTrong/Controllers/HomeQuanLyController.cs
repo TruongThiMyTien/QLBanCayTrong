@@ -96,5 +96,94 @@ namespace BanCayTrong.Controllers
             return View(lstHoaDon);
         }
 
+        public IActionResult HoaDonChuaDuyet()
+        {
+            var lstHoaDon = _context.HoaDon
+                            .Include(k => k.MakhNavigation)
+                            .Include(d => d.MadcNavigation)
+                            .Where(h => h.Trangthai == 0);
+
+            GetInfo();
+            return View(lstHoaDon);
+        }
+
+        public IActionResult HoaDonDaDuyet()
+        {
+            var lstHoaDon = _context.HoaDon
+                            .Include(k => k.MakhNavigation)
+                            .Include(d => d.MadcNavigation)
+                            .Where(h => h.Trangthai == 1);
+
+            GetInfo();
+            return View(lstHoaDon);
+        }
+
+        public IActionResult HoaDonDaHuy()
+        {
+            var lstHoaDon = _context.HoaDon
+                            .Include(k => k.MakhNavigation)
+                            .Include(d => d.MadcNavigation)
+                            .Where(h => h.Trangthai == 2);
+
+            GetInfo();
+            return View(lstHoaDon);
+        }
+
+
+
+        public IActionResult ChiTietHoaDonChuaDuyet(int id)
+        {
+            HoaDon hd = _context.HoaDon
+                        .Include(k => k.MakhNavigation)
+                        .Include(d => d.MadcNavigation)
+                        .FirstOrDefault(h => h.Mahd == id);
+            var lstCTHoaDon = _context.CthoaDon.Include(c => c.MamhNavigation).Where(h => h.Mahd == id);
+            ViewBag.chittiethoadon = lstCTHoaDon;
+            GetInfo();
+            return View(hd);
+        }
+
+        public IActionResult ChiTietHoaDonDaDuyet(int id)
+        {
+            HoaDon hd = _context.HoaDon
+                        .Include(k => k.MakhNavigation)
+                        .Include(d => d.MadcNavigation)
+                        .FirstOrDefault(h => h.Mahd == id);
+            var lstCTHoaDon = _context.CthoaDon.Include(c => c.MamhNavigation).Where(h => h.Mahd == id);
+            ViewBag.chittiethoadon = lstCTHoaDon;
+            GetInfo();
+            return View(hd);
+        }
+
+        public IActionResult ChiTietHoaDonDaHuy(int id)
+        {
+            HoaDon hd = _context.HoaDon
+                        .Include(k => k.MakhNavigation)
+                        .Include(d => d.MadcNavigation)
+                        .FirstOrDefault(h => h.Mahd == id);
+            var lstCTHoaDon = _context.CthoaDon.Include(c => c.MamhNavigation).Where(h => h.Mahd == id);
+            ViewBag.chittiethoadon = lstCTHoaDon;
+            GetInfo();
+            return View(hd);
+        }
+
+        public async Task<IActionResult> DuyetDonHang(int id)
+        {
+            HoaDon hd = _context.HoaDon.FirstOrDefault(h => h.Mahd == id);
+            hd.Trangthai = 1;
+            _context.Update(hd);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(HoaDonChuaDuyet));
+        }
+
+        public async Task<IActionResult> HuyDonHang(int id)
+        {
+            HoaDon hd = _context.HoaDon.FirstOrDefault(h => h.Mahd == id);
+            hd.Trangthai = 2;
+            _context.Update(hd);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(HoaDonChuaDuyet));
+        }
+
     }
 }
