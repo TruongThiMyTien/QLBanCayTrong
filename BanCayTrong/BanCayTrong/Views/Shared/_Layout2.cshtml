@@ -43,13 +43,20 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="bi bi-bar-chart"></i>
+                    <span>Doanh thu</span>
                 </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-controller="HomeQuanLy" asp-action="ThongKeThoiGian">Thời gian</a>
+                        <a class="collapse-item" asp-controller="HomeQuanLy" asp-action="ThongKeKhachHang">Khách hàng</a>
+                        <a class="collapse-item" asp-controller="HomeQuanLy" asp-action="ThongKeMatHang">Sản phẩm</a>
+                    </div>
+                </div>
             </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -93,7 +100,6 @@
 
         </ul>
         <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -125,7 +131,7 @@
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                   @RenderBody()
+                    @RenderBody()
                 </div>
                 <!-- /.container-fluid -->
 
@@ -144,7 +150,7 @@
         </div>
         <!-- End of Content Wrapper -->
 
-    </div>    
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/admin/vendor/jquery/jquery.min.js"></script>
@@ -153,6 +159,8 @@
     <!-- Core plugin JavaScript-->
     <script src="~/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
+    <!-- Custom scripts for all pages-->
+    <script src="~/admin/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
     <script src="~/admin/vendor/chart.js/Chart.min.js"></script>

@@ -26,7 +26,7 @@ namespace BanCayTrong.Controllers
         {
             return View("Login");
         }
-
+        
         public IActionResult Login(string email, string matkhau)
         {
             matkhau = HashPassword(matkhau);
