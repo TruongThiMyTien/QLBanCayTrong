@@ -20,11 +20,11 @@ namespace BanCayTrong.Models
         [Column("mamh")]
         public int Mamh { get; set; }
         [Column("dongia")]
-        public int? Dongia { get; set; }
+        public int Dongia { get; set; }
         [Column("soluong")]
-        public short? Soluong { get; set; }
+        public short Soluong { get; set; }
         [Column("thanhtien")]
-        public int? Thanhtien { get; set; }
+        public int Thanhtien { get; set; }
 
         [ForeignKey(nameof(Mahd))]
         [InverseProperty(nameof(HoaDon.CthoaDon))]

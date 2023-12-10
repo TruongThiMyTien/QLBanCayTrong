@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Thống kê theo thời gian";
+}
+
+<h1 class="text-info">Thống kê theo thời gian</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="submitThongKeThoiGian">
+            <div class="form-group">
+                <label>Ngày bắt đầu</label> <input type="date" name="ngaybatdau"/>
+            </div>
+            <div class="form-group">
+                <label>ngày kết thúc</label> <input type="date" name="ngayketthuc" />
+            </div>
+            <div class="form-group">
+                <input class="btn btn-info my-1" type="submit" value="Thống kê" />
+            </div>
+        </form>
+    </div>
+</div>

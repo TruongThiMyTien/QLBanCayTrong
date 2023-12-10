@@ -20,9 +20,9 @@ namespace BanCayTrong.Models
         [Column("mahd")]
         public int Mahd { get; set; }
         [Column("ngay", TypeName = "datetime")]
-        public DateTime? Ngay { get; set; }
+        public DateTime Ngay { get; set; }
         [Column("tongtien")]
-        public int? Tongtien { get; set; }
+        public int Tongtien { get; set; }
         [Column("makh")]
         public int Makh { get; set; }
         [Column("madc")]
