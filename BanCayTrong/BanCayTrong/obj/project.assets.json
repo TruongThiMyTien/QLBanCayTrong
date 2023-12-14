@@ -9555,11 +9555,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\t0195\\Desktop\\ASP NET\\DOAN\\BanCayTrong\\QLBanCayTrong\\BanCayTrong\\BanCayTrong\\BanCayTrong.csproj",
+      "projectUniqueName": "C:\\Users\\t0195\\Desktop\\ASP NET\\DOAN\\QLBanCayTrong\\BanCayTrong\\BanCayTrong\\BanCayTrong.csproj",
       "projectName": "BanCayTrong",
-      "projectPath": "C:\\Users\\t0195\\Desktop\\ASP NET\\DOAN\\BanCayTrong\\QLBanCayTrong\\BanCayTrong\\BanCayTrong\\BanCayTrong.csproj",
+      "projectPath": "C:\\Users\\t0195\\Desktop\\ASP NET\\DOAN\\QLBanCayTrong\\BanCayTrong\\BanCayTrong\\BanCayTrong.csproj",
       "packagesPath": "C:\\Users\\t0195\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\t0195\\Desktop\\ASP NET\\DOAN\\BanCayTrong\\QLBanCayTrong\\BanCayTrong\\BanCayTrong\\obj\\",
+      "outputPath": "C:\\Users\\t0195\\Desktop\\ASP NET\\DOAN\\QLBanCayTrong\\BanCayTrong\\BanCayTrong\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

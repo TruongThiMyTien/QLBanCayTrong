@@ -11,18 +11,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace QLBanCayTrong.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IPasswordHasher<KhachHang> _passwordHasher;
 
-        public HomeController(ApplicationDbContext context, IPasswordHasher<KhachHang> passwordHasher)
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
-            _passwordHasher = passwordHasher;
         }
 
         public void GetInfo()
@@ -241,13 +241,21 @@ namespace QLBanCayTrong.Controllers
         [HttpPost]
         public IActionResult Login(string email, string matkhau)
         {
-            KhachHang kh = _context.KhachHang.FirstOrDefault(k => k.Email == email && k.Matkhau != null && k.Daxoa == 0);
+            KhachHang kh = _context.KhachHang.FirstOrDefault(k => k.Email == email && k.Matkhau == HashPassword(matkhau) && k.Daxoa == 0);
 
-            if (kh != null && matkhau != null && _passwordHasher.VerifyHashedPassword(kh, kh.Matkhau, matkhau) == PasswordVerificationResult.Success)
+            if (kh != null)
             {
                 HttpContext.Session.SetString("khachhang", kh.Makh.ToString());
                 return RedirectToAction(nameof(ProfileCustomer));
-            }
+            }else
+            {
+                NhanVien nv = _context.NhanVien.FirstOrDefault(n => n.Email == email && n.Matkhau == HashPassword(matkhau));
+                if (nv != null)
+                {
+                    HttpContext.Session.SetString("nhanvien", nv.Manv.ToString());
+                    return RedirectToAction("Index", "HomeQuanLy");
+                }
+            }    
             return RedirectToAction(nameof(Login));
         }
 
@@ -264,11 +272,12 @@ namespace QLBanCayTrong.Controllers
         {
             GetInfo();
             // kiểm tra email đã đăng kí tài khoản chưa
-            var tmp = _context.KhachHang.FirstOrDefault(k => k.Matkhau != null && k.Email == email);
-            if (tmp != null)
+            KhachHang chkKH = _context.KhachHang.FirstOrDefault(k => k.Matkhau != null && k.Email == email);
+            NhanVien chkNV = _context.NhanVien.FirstOrDefault(k => k.Email == email);
+            if (chkKH != null || chkNV != null)
             {
                 // khách hàng đã có tài khoản
-                return View("dacotk", tmp);
+                return RedirectToAction(nameof(Register));
             }
             else
             {
@@ -277,7 +286,7 @@ namespace QLBanCayTrong.Controllers
                 kh.Ten = hoten;
                 kh.Dienthoai = dienthoai;
                 kh.Email = email;
-                kh.Matkhau = _passwordHasher.HashPassword(kh, matkhau);
+                kh.Matkhau = HashPassword(matkhau);
                 kh.Daxoa = 0;
                 _context.Add(kh);
                 await _context.SaveChangesAsync();
@@ -357,7 +366,7 @@ namespace QLBanCayTrong.Controllers
             kh.Dienthoai = dienthoai;
             if (matkhau != null)
             {
-                kh.Matkhau = _passwordHasher.HashPassword(kh, matkhau);
+                kh.Matkhau = HashPassword(matkhau);
             }
             _context.Update(kh);
             await _context.SaveChangesAsync();
@@ -388,7 +397,7 @@ namespace QLBanCayTrong.Controllers
             return RedirectToAction(nameof(ProfileCustomer));
         }
 
-        public async Task<IActionResult> DeleteAddressAsync(int id)
+        public async Task<IActionResult> DeleteAddress(int id)
         {
             DiaChi dc = _context.DiaChi.FirstOrDefault(d => d.Madc == id);
             dc.Daxoa = 1;
@@ -410,6 +419,63 @@ namespace QLBanCayTrong.Controllers
             var lstHang = await _context.MatHang.Include(m => m.MadmNavigation).Where(h => h.Madm == id && h.Daxoa == 0).ToListAsync();
             GetInfo();
             return View(lstHang);
+        }
+
+        public string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+
+                return builder.ToString();
+            }
+        }
+
+        public IActionResult DonHangChuaDuyet()
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            var lstdonhang = _context.HoaDon.Include(h => h.MadcNavigation).Where(d => d.Makh == makh && d.Trangthai == 0);
+            GetInfo();
+            return View(lstdonhang);
+        }
+
+        public IActionResult DonHangDaDuyet()
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            var lstdonhang = _context.HoaDon.Include(h => h.MadcNavigation).Where(d => d.Makh == makh && d.Trangthai == 1);
+            GetInfo();
+            return View(lstdonhang);
+        }
+
+        public IActionResult DonHangDaHuy()
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            var lstdonhang = _context.HoaDon.Include(h => h.MadcNavigation).Where(d => d.Makh == makh && d.Trangthai == 2);
+            GetInfo();
+            return View(lstdonhang);
+        }
+
+        public IActionResult ChiTietHoaDon(int id)
+        {
+            ViewBag.hoadon = _context.HoaDon.Include(h => h.MadcNavigation).FirstOrDefault(b => b.Mahd == id);
+            var lstCTHoaDon = _context.CthoaDon.Include(c => c.MamhNavigation).Where(c => c.Mahd == id);
+            GetInfo();
+            return View(lstCTHoaDon);
+        }
+
+        public async Task<IActionResult> HuyDonHang(int id)
+        {
+            HoaDon hd = _context.HoaDon.FirstOrDefault(h => h.Mahd == id);
+            hd.Trangthai = 2;
+            _context.Update(hd);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DonHangDaHuy));
         }
     }
 }

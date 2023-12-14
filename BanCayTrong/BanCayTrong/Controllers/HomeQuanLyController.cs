@@ -49,6 +49,8 @@ namespace BanCayTrong.Controllers
             }
             ViewData["ngaybatdau"] = ngaybatdau.Month + "/" + ngaybatdau.Day + "/" + ngaybatdau.Year;
             ViewData["ngayketthuc"] = ngayketthuc.Month + "/" + ngayketthuc.Day + "/" + ngayketthuc.Year;
+            ViewData["valuengaybatdau"] = ngaybatdau.ToString("yyyy-MM-dd");
+            ViewData["valuengayketthuc"] = ngayketthuc.ToString("yyyy-MM-dd");
             ViewData["tongtien"] = tongtien.ToString("n0");
             GetInfo();
             return View(lstHoaDon);
@@ -184,6 +186,19 @@ namespace BanCayTrong.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(HoaDonChuaDuyet));
         }
+
+        public IActionResult ProfileNhanVien()
+        {
+            GetInfo();
+            return View();
+        }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.SetString("nhanvien", "");
+            return RedirectToAction("Index", "Home");
+
+        }    
 
     }
 }
