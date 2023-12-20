@@ -71,6 +71,7 @@ namespace BanCayTrong.Controllers
             if (ModelState.IsValid)
             {
                 matHang.Hinhanh = UploadHinhAnh(file);
+                matHang.Daxoa = 0;
                 _context.Add(matHang);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
